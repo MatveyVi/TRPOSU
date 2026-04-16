@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Система проката транспорта</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="home">
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">ТР</span>
+          <span>
+            <strong>Прокат транспорта</strong>
+            <small>Курсовой проект</small>
+          </span>
+        </a>
+        <nav class="site-nav">
+          <a href="/" data-nav="home">Главная</a>
+          <a href="/status" data-nav="status">Состояние</a>
+          <a href="/about" data-nav="about">О системе</a>
+        </nav>
+      </header>
+
+      <main class="page">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">ТРПОСУ · Вариант 13</p>
+            <h1>Система проката транспорта</h1>
+            <p class="subtitle">
+              Простая информационная система для двух пунктов проката: добавление
+              транспорта, прокат, покупка, возврат по идентификатору и просмотр
+              текущего состояния.
+            </p>
+            <div class="hero-actions">
+              <button type="button" data-open-modal="addModal">добавить транспорт</button>
+              <button type="button" class="secondary" data-open-modal="rentModal">
+                снять транспорт
+              </button>
+              <a class="button-link ghost" href="/status">состояние пункта</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Пункты проката</p>
+              <h2>Текущие остатки по точкам</h2>
+            </div>
+            <span id="rentalCounter" class="section-note">Снято: 0</span>
+          </div>
+          <div id="pointsGrid" class="points-grid" data-quick-actions="true"></div>
+        </section>
+
+        <div class="content-split">
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Возврат</p>
+                <h2>Вернуть транспорт в выбранный пункт</h2>
+              </div>
+              <span class="section-note">Возврат возможен в любой пункт</span>
+            </div>
+            <div class="form-grid">
+              <label>
+                Пункт возврата
+                <select id="returnPointSelect"></select>
+              </label>
+              <label>
+                Идентификатор аренды
+                <select id="returnRentalSelect"></select>
+              </label>
+            </div>
+            <div class="inline-actions">
+              <button id="returnButton" type="button">вернуть транспорт</button>
+            </div>
+          </section>
+
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">История</p>
+                <h2>Последние действия</h2>
+              </div>
+              <a class="text-link" href="/status">открыть полный журнал</a>
+            </div>
+            <div id="operationsPreview" class="activity-list compact"></div>
+          </section>
+        </div>
+
+        <p id="infoLine" class="info-line">Система готова к работе.</p>
+      </main>
+    </div>
+
+    <div id="addModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">Операция</p>
+            <h2>Добавить транспортное средство</h2>
+          </div>
+        </div>
+        <form id="addForm" class="modal-form">
+          <label>
+            Пункт проката
+            <select name="pointCode" id="addPointSelect"></select>
+          </label>
+          <fieldset id="addTypeGroup" class="radio-group">
+            <legend>Тип транспорта</legend>
+          </fieldset>
+          <label>
+            Количество
+            <input type="number" name="quantity" min="1" step="1" value="1" />
+          </label>
+          <div class="modal-actions">
+            <button type="submit">подтвердить</button>
+            <button type="button" class="ghost" data-close-modal="addModal">отменить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="rentModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">Операция</p>
+            <h2>Снять транспортное средство</h2>
+          </div>
+        </div>
+        <form id="rentForm" class="modal-form">
+          <label>
+            Пункт проката
+            <select name="pointCode" id="rentPointSelect"></select>
+          </label>
+          <fieldset id="rentTypeGroup" class="radio-group">
+            <legend>Тип транспорта</legend>
+          </fieldset>
+          <label>
+            Количество
+            <input type="number" name="quantity" min="1" step="1" value="1" />
+          </label>
+          <label class="checkbox-row">
+            <input type="checkbox" name="buy" />
+            купить без возврата
+          </label>
+          <div class="modal-actions">
+            <button type="submit">подтвердить</button>
+            <button type="button" class="ghost" data-close-modal="rentModal">отменить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="popupModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-card narrow">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">Сообщение</p>
+            <h2 id="popupTitle">Статус операции</h2>
+          </div>
+        </div>
+        <p id="popupMessage" class="popup-message"></p>
+        <div class="modal-actions">
+          <button id="popupOkButton" type="button">ok</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

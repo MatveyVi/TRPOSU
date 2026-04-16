@@ -1,0 +1,15 @@
+{
+  "name": "transport-rental-coursework",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/server",
+    "apps/web"
+  ],
+  "scripts": {
+    "start": "npm --workspace @trposu/server run start",
+    "dev": "npm --workspace @trposu/server run dev",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down"
+  }
+}

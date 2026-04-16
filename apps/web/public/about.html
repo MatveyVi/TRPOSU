@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>О системе | Система проката транспорта</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="about">
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">ТР</span>
+          <span>
+            <strong>Прокат транспорта</strong>
+            <small>Курсовой проект</small>
+          </span>
+        </a>
+        <nav class="site-nav">
+          <a href="/" data-nav="home">Главная</a>
+          <a href="/status" data-nav="status">Состояние</a>
+          <a href="/about" data-nav="about">О системе</a>
+        </nav>
+      </header>
+
+      <main class="page">
+        <section class="hero hero-compact">
+          <div class="hero-copy">
+            <p class="eyebrow">Справка</p>
+            <h1>Как устроена система</h1>
+            <p class="subtitle">
+              Краткое описание функционала, соответствия требованиям и текущего
+              технического устройства приложения.
+            </p>
+          </div>
+        </section>
+
+        <div class="content-split">
+          <section class="section-card prose-card">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Возможности</p>
+                <h2>Что умеет приложение</h2>
+              </div>
+            </div>
+            <ul class="plain-list">
+              <li>Добавление транспорта в выбранный пункт с проверкой вместимости.</li>
+              <li>Прокат транспорта с генерацией уникальных идентификаторов.</li>
+              <li>Покупка транспорта без создания идентификатора и без возврата.</li>
+              <li>Возврат транспорта в любой пункт с контролем свободных мест.</li>
+              <li>Просмотр состояния пунктов, progress bar и истории операций.</li>
+            </ul>
+          </section>
+
+          <section class="section-card prose-card">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Техническая часть</p>
+                <h2>Как хранится состояние</h2>
+              </div>
+            </div>
+            <ul class="plain-list">
+              <li>Основные данные хранятся в PostgreSQL.</li>
+              <li>Дополнительно поддерживается snapshot-файл `data/state.json`.</li>
+              <li>При старте система восстанавливает состояние из файла, если база пуста.</li>
+              <li>После успешных операций обновляется и база, и snapshot.</li>
+            </ul>
+          </section>
+        </div>
+
+        <section class="section-card prose-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Соответствие ТЗ</p>
+              <h2>Как реализованы пункты 13.1, 13.2 и 13.3</h2>
+            </div>
+          </div>
+          <div class="requirements-grid">
+            <article class="requirement-card">
+              <h3>13.1</h3>
+              <p>
+                Реализованы две точки проката, три типа транспорта, выдача с
+                уникальным идентификатором и возврат по выбранному пункту.
+              </p>
+            </article>
+            <article class="requirement-card">
+              <h3>13.2</h3>
+              <p>
+                Используются радиокнопки, ввод количества, progress bar по каждой
+                точке и режим покупки без дальнейшего возврата.
+              </p>
+            </article>
+            <article class="requirement-card">
+              <h3>13.3</h3>
+              <p>
+                Основные операции вынесены в диалоговые окна, ошибки показываются
+                всплывающими сообщениями, а состояние пункта вынесено на отдельный
+                экран.
+              </p>
+            </article>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <div id="popupModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-card narrow">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">Сообщение</p>
+            <h2 id="popupTitle">Статус операции</h2>
+          </div>
+        </div>
+        <p id="popupMessage" class="popup-message"></p>
+        <div class="modal-actions">
+          <button id="popupOkButton" type="button">ok</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

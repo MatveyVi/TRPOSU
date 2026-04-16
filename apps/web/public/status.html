@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Состояние пунктов | Система проката транспорта</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="status">
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">ТР</span>
+          <span>
+            <strong>Прокат транспорта</strong>
+            <small>Курсовой проект</small>
+          </span>
+        </a>
+        <nav class="site-nav">
+          <a href="/" data-nav="home">Главная</a>
+          <a href="/status" data-nav="status">Состояние</a>
+          <a href="/about" data-nav="about">О системе</a>
+        </nav>
+      </header>
+
+      <main class="page">
+        <section class="hero hero-compact">
+          <div class="hero-copy">
+            <p class="eyebrow">Мониторинг</p>
+            <h1>Состояние пунктов проката</h1>
+            <p class="subtitle">
+              Детальная информация по выбранному пункту, список активных аренд и
+              журнал последних действий в системе.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Пункт проката</p>
+              <h2>Подробное состояние выбранной точки</h2>
+            </div>
+          </div>
+          <div class="status-toolbar">
+            <label class="status-select">
+              Пункт проката
+              <select id="statusPointSelect"></select>
+            </label>
+          </div>
+          <div class="status-layout">
+            <label class="status-textarea">
+              Текстовое состояние
+              <textarea id="statusOutput" rows="9" readonly></textarea>
+            </label>
+            <div class="status-side">
+              <div class="metric-card">
+                <p class="metric-label">Общая наполненность</p>
+                <div class="status-progress">
+                  <div class="status-progress-head">
+                    <span>Транспорт на точке</span>
+                    <span id="statusProgressText">0 из 0</span>
+                  </div>
+                  <progress id="statusProgressBar" max="8" value="0"></progress>
+                </div>
+              </div>
+              <div id="statusPointFacts" class="fact-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="content-split">
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Прокат</p>
+                <h2>Активные аренды</h2>
+              </div>
+            </div>
+            <div id="activeRentalsList" class="rentals-list"></div>
+          </section>
+
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Журнал</p>
+                <h2>Последние операции</h2>
+              </div>
+            </div>
+            <div id="operationLogList" class="activity-list"></div>
+          </section>
+        </div>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Обзор</p>
+              <h2>Все пункты проката</h2>
+            </div>
+          </div>
+          <div id="statusPointsGrid" class="points-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="popupModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-card narrow">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">Сообщение</p>
+            <h2 id="popupTitle">Статус операции</h2>
+          </div>
+        </div>
+        <p id="popupMessage" class="popup-message"></p>
+        <div class="modal-actions">
+          <button id="popupOkButton" type="button">ok</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

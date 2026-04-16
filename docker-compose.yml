@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: transport-rental-db
+    environment:
+      POSTGRES_DB: transport_rental
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: transport-rental-app
+    depends_on:
+      - db
+    environment:
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: transport_rental
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      SNAPSHOT_PATH: data/state.json
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+
+volumes:
+  postgres_data:
